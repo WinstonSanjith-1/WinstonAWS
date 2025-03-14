@@ -1,0 +1,4 @@
+DYNAMODB:
+Firstly, I created a table in DynamoDb named PatientReminders with PatientID as partition key. 
+Then I added the attributes such as Name, Email, StartDate and NotificationTime. StartDate and NotificationTime are written in UTC timezone and ISO8601 format. 
+Added the policies in IAM. (DynamoDbfullaccess).
