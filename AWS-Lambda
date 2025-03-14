@@ -1,4 +1,6 @@
-AWS Lambda: Applied Policies in IAM role and connected the role to lambda when creating a funtion, so the Lambda funtion can access the DynamoDB. A logic is created using python, which scans the table and compares the StartDate and NoticationTime with the trigger date and time which is set by Event Bridge. If the time and date matches with the patient(as each might be having different medication start dates), then the function invokes the SNS to push emails to the specific patients.
+AWS Lambda: Applied Policies in IAM role and connected the role to lambda when creating a funtion, so the Lambda funtion can access the DynamoDB. 
+A logic is created using python, which scans the table and compares the StartDate and NoticationTime with the trigger date and time which is set by Event Bridge. 
+If the time and date matches with the patient(as each might be having different medication start dates), then the function invokes the SNS to push emails to the specific patients.
 
 Here is the code:
 
