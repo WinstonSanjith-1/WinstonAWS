@@ -1,0 +1,4 @@
+I created a topic in SNS, and added the policies.
+Created subscriptions to the topic, which are emails of the patients.
+Subscriptions in SNS needs to be approved by the end-user inorder to them receive messages.
+After approving the subscriptions are confirmed
