@@ -1,0 +1,63 @@
+AWS Lambda: Applied Policies in IAM role and connected the role to lambda when creating a funtion, so the Lambda funtion can access the DynamoDB. A logic is created using python, which scans the table and compares the StartDate and NoticationTime with the trigger date and time which is set by Event Bridge. If the time and date matches with the patient(as each might be having different medication start dates), then the function invokes the SNS to push emails to the specific patients.
+
+Here is the code:
+
+import boto3 import datetime
+
+Initialize DynamoDB and SNS clients
+
+dynamodb = boto3.client('dynamodb') sns = boto3.client('sns')
+
+def lambda_handler(event, context): # Get current UTC time current_time = datetime.datetime.utcnow()
+
+# Query the DynamoDB table
+response = dynamodb.scan(TableName='PatientReminders')
+
+# Loop through each item in the response
+for patient in response['Items']:
+    # Extract patient data
+    patient_id = patient['PatientID']['S']
+    name = patient['Name']['S']
+    start_date_str = patient['StartDate']['S']
+    notification_time_str = patient['NotificationTime']['S']
+    email_address = patient['EmailAddress']['S']
+
+    # Convert StartDate from string (in UTC) to a datetime object
+    try:
+        start_date = datetime.datetime.strptime(start_date_str, '%Y-%m-%dT%H:%M:%SZ')  # Correct format for ISO 8601
+    except ValueError as e:
+        print(f"Error parsing StartDate {start_date_str}: {e}")
+        continue  # Skip this entry if there's an issue parsing the date
+
+    # Convert notification time (e.g., '09:00') to datetime object (UTC)
+    try:
+        notification_time = datetime.datetime.strptime(notification_time_str, '%H:%M')
+    except ValueError as e:
+        print(f"Error parsing NotificationTime {notification_time_str}: {e}")
+        continue  # Skip this entry if there's an issue parsing the time
+
+    # Create a datetime object for today's reminder time (same time as the notification time)
+    reminder_time_today = current_time.replace(hour=notification_time.hour, minute=notification_time.minute, second=0, microsecond=0)
+
+    # Calculate the days since the start date
+    days_since_start = (current_time - start_date).days
+
+    # If the reminder is today or if it's been exactly 7 days since the last reminder (weekly)
+    if days_since_start >= 0 and days_since_start % 7 == 0 and current_time >= reminder_time_today:
+        # Send an email with the patient's name and email address
+        print(f"Reminder: Time for {name} to take Vitamin D tablets!")
+        
+        # Personalized message for each patient
+        subject = "Vitamin D Reminder"
+        message = f"Dear {name},\n\nThis is your weekly reminder to take your Vitamin D tablets.\n\nBest regards,\nYour Health Reminder System"
+        
+        # Use the SNS Topic ARN (replace this with your actual Topic ARN)
+        topic_arn = "arn:aws:sns:ap-south-1:650251683401:VitaminDReminderEmailTopic"
+        
+        # Sending reminder via SNS (Email)
+        sns.publish(
+            Message=message,
+            Subject=subject,
+            TopicArn=topic_arn  # Publish to the SNS topic
+        )
+        print(f"Sent email reminder to {name} at {email_address}")
