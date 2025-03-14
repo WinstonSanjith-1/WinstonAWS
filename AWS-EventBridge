@@ -1,0 +1,4 @@
+I created a Rule and scheduled it to run on a weekly basis in occurence of every 7 days from the start date for a specific day of the week at a specific time.
+Created rules with same configuration for every day of the week, so that lambda triggers daily at a specific time and patients with any startdate can receive messages.
+Added the Lambda function under targets.
+Added the specific IAM policies.
