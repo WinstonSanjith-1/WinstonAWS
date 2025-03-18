@@ -6,6 +6,9 @@ Some medications which are prescribed by the doctors have a weekly dosage regime
 OVERVIEW
 
 DynamoDB(database)----------AWS Lambda(logic function)----------AWS SNS(email)  
-                                        |
-                                        |
+
+                                        |  
+                                        
+                                        |  
+                                        
                          AWS EventBridge (trigger lambda)
