@@ -1,14 +1,39 @@
-Project on AWS.
-I have created a automated mailing system using Amazon Web Services such as DynamoDB, AWS Lambda, AWS Event Bridge and AWS SNS.
+#  AWS Automated Medication Reminder System  
 
-Some medications which are prescribed by the doctors have a weekly dosage regimen such as VITAMIN D supplements. This can be challenging for patients to follow up. Therefore I created an automation which sends E-mail reminder every week to patients to help them take the supplements on time.
+##  Project Overview  
+This project implements a serverless, event-driven email notification system on **Amazon Web Services (AWS)** to help patients adhere to their weekly medication regimen.  
 
-OVERVIEW
+Certain medications, such as **Vitamin D supplements**, follow a weekly dosage schedule, which can be challenging for patients to remember. This system automates email reminders to ensure timely medication intake.  
 
-DynamoDB(database)----------AWS Lambda(logic function)----------AWS SNS(email)  
+By leveraging **AWS**, the solution ensures improved adherence and patient outcomes without the need for manual intervention.  
 
-                                        |  
-                                        
-                                        |  
-                                        
-                         AWS EventBridge (trigger lambda)
+---
+
+##  Tech Stack & AWS Services  
+
+- **Amazon DynamoDB** – NoSQL database for storing patient and medication details.  
+- **AWS Lambda** – Serverless function that processes reminders and triggers notifications.  
+- **Amazon SNS** – Manages and sends email notifications to patients.  
+- **AWS EventBridge** – Schedules and triggers AWS Lambda functions on a weekly basis.  
+
+---
+
+##  System Architecture  
+
+   **Data Storage (Amazon DynamoDB)**  
+   - Stores patient details, medication name, dosage frequency, and email addresses.
+     
+   **Automation & Scheduling (AWS EventBridge)**  
+   - Triggers the AWS Lambda function at scheduled intervals (weekly).
+   
+   **Logic & Processing (AWS Lambda)**  
+   - Fetches patient data from DynamoDB.  
+   - Formats and prepares email reminders.  
+   - Publishes messages to Amazon SNS for email delivery.     
+
+   **Email Notification (Amazon SNS)**  
+   - Delivers email reminders to patients based on their stored medication schedules.  
+
+---
+
+ 
