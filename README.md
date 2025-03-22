@@ -18,22 +18,23 @@ By leveraging **AWS**, the solution ensures improved adherence and patient outco
 
 ---
 
-##  System Architecture  
+##  System Architecture & Workflow
 
-   **Data Storage (Amazon DynamoDB)**  
-   - Stores patient details, medication name, dosage frequency, and email addresses.
+**Data Storage (Amazon DynamoDB)**  
+- Stores patient details, medication name, dosage frequency, and email addresses.
      
-   **Automation & Scheduling (AWS EventBridge)**  
-   - Triggers the AWS Lambda function at scheduled intervals (weekly).
+**Automation & Scheduling (AWS EventBridge)**  
+- Triggers the AWS Lambda function at scheduled intervals (weekly).
    
-   **Logic & Processing (AWS Lambda)**  
-   - Fetches patient data from DynamoDB.  
-   - Formats and prepares email reminders.  
-   - Publishes messages to Amazon SNS for email delivery.     
+**Logic & Processing (AWS Lambda)**  
+- Fetches patient data from DynamoDB.  
+- Formats and prepares email reminders.  
+- Publishes messages to Amazon SNS for email delivery.     
 
-   **Email Notification (Amazon SNS)**  
-   - Delivers email reminders to patients based on their stored medication schedules.  
+**Email Notification (Amazon SNS)**  
+- Delivers email reminders to patients based on their stored medication schedules.  
 
 ---
 
+This project is completely serverless!
  
